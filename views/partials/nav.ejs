@@ -4,7 +4,7 @@
         Airbnb
       </div>
 
-      <ul class="flex space-x-6 text-white text-sm">
+      <ul class="flex space-x-6 text-white text-sm items-center">
         <li>
           <a href="/" class="<%= currentPage === 'index' ? 'bg-red-400' : 'hover:border-white' %> border border-transparent   p-1.5 rounded-sm">Home</a>
         </li>
@@ -28,12 +28,21 @@
         <li>
           <a href="/login" class="<%= currentPage === 'login' ? 'bg-red-400' : 'hover:border-white' %> border border-transparent   p-1.5 rounded-sm">Login</a>
         </li>
+        <li>
+          <a href="/signin" class="<%= currentPage === 'signin' ? 'bg-red-400' : 'hover:border-white' %> border border-transparent   p-1.5 rounded-sm">Sign in</a>
+        </li>
 
         <% } else { %>
           <li>
-            <form action="/logout" method="POST" class="inline <%= currentPage === 'login' ? 'bg-red-400' : 'hover:border-white' %> border border-transparent   p-1.5 rounded-sm">
-          <button type='Submit' class="">Logout</button>
-          </form>
+  <div class="<%= currentPage === 'signin' ? 'bg-red-400' : 'hover:border-white' %> border border-transparent   p-1.5 rounded-sm"><form action="/logout" method="POST" >
+    <button
+      type="submit"
+      >
+      Logout
+    </button>
+  </form>
+  <!-- <a href="/logout" class="<%= currentPage === 'login' ? 'bg-red-400' : 'hover:border-white' %> border border-transparent   p-1.5 rounded-sm">Logout</a> -->
+   </div>
         </li>
           <% } %>
       </ul>

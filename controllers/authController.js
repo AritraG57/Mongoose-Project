@@ -18,4 +18,12 @@ exports.postLogout = (req,res,next) => {
     req.session.destroy(() => {
     res.redirect('/login');
   });
+};
+
+exports.getSignin =(req,res,next)=> {
+    res.render("auth/signin", {
+        pageTitle: "sign in",
+        currentPage: "signin",
+        isLoggedIn : req.isLoggedIn,
+      });
 }
