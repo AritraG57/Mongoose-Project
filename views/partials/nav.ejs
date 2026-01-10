@@ -8,6 +8,7 @@
         <li>
           <a href="/" class="<%= currentPage === 'index' ? 'bg-red-400' : 'hover:border-white' %> border border-transparent   p-1.5 rounded-sm">Home</a>
         </li>
+        <% if(isLoggedIn) { %>
         <li>
           <a href="/add-home" class="<%= currentPage === 'add-home' ? 'bg-red-400' : 'hover:border-white' %> border border-transparent   p-1.5 rounded-sm
 ">Add Home</a>
@@ -20,6 +21,21 @@
         <li>
           <a href="/host/host-homes" class="<%= currentPage === 'host-homes' ? 'bg-red-400' : 'hover:border-white' %> border border-transparent   p-1.5 rounded-sm">Host Homes</a>
         </li>
+
+        <% } %>
+
+        <% if(!isLoggedIn)  { %>
+        <li>
+          <a href="/login" class="<%= currentPage === 'login' ? 'bg-red-400' : 'hover:border-white' %> border border-transparent   p-1.5 rounded-sm">Login</a>
+        </li>
+
+        <% } else { %>
+          <li>
+            <form action="/logout" method="POST" class="inline <%= currentPage === 'login' ? 'bg-red-400' : 'hover:border-white' %> border border-transparent   p-1.5 rounded-sm">
+          <button type='Submit' class="">Logout</button>
+          </form>
+        </li>
+          <% } %>
       </ul>
     </nav>
   </header>
