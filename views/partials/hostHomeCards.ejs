@@ -1,0 +1,44 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+  <% registeredHomes.forEach((el)=> { %>
+    <div class="m-2 bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition">
+
+      <img
+        src="<%= el.image %>"
+        alt="<%= el.homename %>"
+        class="h-48 w-full object-cover"
+      />
+
+      <div class="flex justify-between items-center p-4 space-y-1">
+
+        <div><p class="font-semibold text-lg text-gray-800">
+          <%= el.homename %>
+        </p>
+
+        <p class="text-red-500 font-bold">
+          ₹<%= el.price %> <span class="text-sm">/ night</span>
+        </p></div>
+
+        <p class="text-sm text-gray-500">
+          ⭐ <%= el.rating %>
+        </p>
+      </div>
+      <div class="flex items-center justify-between px-4 pb-4">
+  
+  <!-- <button
+    class="bg-red-500 hover:bg-red-600 text-white text-sm font-medium px-4 py-2 rounded-md transition"
+  >
+    Book
+  </button> -->
+  <%- include('./editButton.ejs',{home : el}) %>
+  <!-- <a
+    href="/home/<%= el.id %>"
+    class="text-sm font-medium text-red-500 hover:underline"
+  >
+    View details
+  </a> -->
+<%- include('./deleteButton.ejs',{home : el}) %>
+</div>
+
+    </div>
+  <% }) %>
+</div>

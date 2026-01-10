@@ -1,0 +1,9 @@
+<form action="/favourites/delete/<%= home._id %>" method="POST">
+  <button
+    type="submit"
+    class="w-full p-2 bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-lg transition"
+  >
+    Delete From Favourites
+  </button>
+  <input type="hidden" name="id" value="<%= home._id %>" />
+</form>
