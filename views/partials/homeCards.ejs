@@ -29,7 +29,9 @@
   >
     Book
   </button> -->
+  <% if(user.userType === 'guest') { %>
   <%- include('./favourites.ejs',{home : el}) %>
+  <% } %>
   <a
     href="/home/<%= el._id %>"
     class="text-sm font-medium text-red-500 hover:underline"

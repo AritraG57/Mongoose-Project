@@ -1,5 +1,6 @@
 const favourite = require("../models/favourites");
 const home = require("../models/Home");
+const User = require('../models/user');
 
 exports.homeList = (req, res, next) => {
   home
@@ -38,13 +39,12 @@ exports.getHomeDetails = (req, res, next) => {
 };
 
 exports.getAddToFavourites = (req, res, next) => {
-  
-  favourite
-    .find().populate("homeId")
-    .then((favourites) => {
-      const favouriteHomes = favourites.map(fav => fav.homeId);
+  const userId = req.session.user._id;
+  User.findById(userId).populate('favouriteHomes')
+    .then((user) => {
+      
       res.render("store/favourites", {
-          registeredHomes: favouriteHomes,
+          registeredHomes: user.favouriteHomes,
           pageTitle: "Favourites",
           currentPage: "favourites",
           isLoggedIn : req.session.isLoggedIn,
@@ -62,14 +62,14 @@ exports.getAddToFavourites = (req, res, next) => {
 
 exports.postAddToFavourites = (req, res, next) => {
   const homeId = req.body.id;
-  favourite.findOne({homeId : homeId}).then((existingFav) => {
-    if(existingFav) {
-      return res.redirect('/favourites');
+  const userId = req.session.user._id;
+  User.findById(userId).then((user) => {
+    if(!user.favouriteHomes.includes(homeId)) {
+      user.favouriteHomes.push(homeId);
+      return user.save();
     }
-    else {
-      const fav = new favourite({homeId : homeId});
-      return fav.save();
-    }
+    return user;
+    
   }).then(()=> {
     res.redirect('/favourites');
   }).catch((err)=> {
@@ -79,7 +79,11 @@ exports.postAddToFavourites = (req, res, next) => {
 
 exports.postDeleteFavourites = (req, res, next) => {
   const homeId = req.params.homeId;
-  favourite.findOneAndDelete({homeId : homeId}).then(()=> {
+  const userId = req.session.user._id;
+  User.findById(userId).then((user)=>{
+    user.favouriteHomes = user.favouriteHomes.filter(id => id.toString() !== homeId);
+    return user.save();
+  }).then(()=> {
     res.redirect("/favourites");
   }).catch((err)=> {
     console.log("Error occured in postDeleteFavourites");

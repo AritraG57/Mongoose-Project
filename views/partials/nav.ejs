@@ -8,7 +8,7 @@
 
     <!-- LEFT MENU -->
     <ul class="flex space-x-6 text-white text-sm items-center">
-      <% if(user.userType === 'guest') { %>
+      
         <li>
         <a href="/"
            class="<%= currentPage === 'index' ? 'bg-red-400' : 'hover:border-white' %>
@@ -17,7 +17,7 @@
           Home
         </a>
       </li>
-      <% } %>
+      
 
       <% if(isLoggedIn) { %>
       

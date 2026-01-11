@@ -38,7 +38,9 @@
         <hr class="my-4">
 
         <!-- Favourotes Button -->
+         <% if(user.userType === 'guest') { %>
          <%- include('./favourites.ejs') %>
+         <% } %>
 
         <!-- Info -->
         <a href="/" class = "w-full flex justify-center items-center text-xs text-gray-500 text-center mt-3">

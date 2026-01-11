@@ -23,7 +23,11 @@ const userSchema =  new mongoose.Schema({
         type :String,
         required : true,
         enum : ['guest','host'],
-    }
+    },
+    favouriteHomes: [{
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'Home'
+    }]
 
 });
 

@@ -7,7 +7,7 @@ exports.getAddHome = (req, res, next) => {
     pageTitle: "Add Home",
     currentPage: "add-home",
     editing : false,
-    isLoggedIn : req.session,isLoggedIn,
+    isLoggedIn : req.session.isLoggedIn,
     user : req.session.user,
   });
 };
