@@ -67,6 +67,7 @@ exports.getSignin = (req, res, next) => {
     isLoggedIn: req.isLoggedIn,
     oldInput: {},
     errorMassages: [],
+    user : {},
   });
 };
 
@@ -149,6 +150,7 @@ exports.postSignin = [
           password,
           userType,
         },
+        user : {},
       });
     }
 

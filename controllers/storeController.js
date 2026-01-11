@@ -9,7 +9,8 @@ exports.homeList = (req, res, next) => {
         registeredHomes: registeredHomes,
         pageTitle: "Index",
         currentPage: "index",
-        isLoggedIn : req.isLoggedIn,
+        isLoggedIn : req.session.isLoggedIn,
+        user : req.session.user,
       });
     })
     .catch((err) => {
@@ -26,7 +27,8 @@ exports.getHomeDetails = (req, res, next) => {
         home: home,
         pageTitle: "Home Details",
         currentPage: "index",
-        isLoggedIn : req.isLoggedIn,
+        isLoggedIn : req.session.isLoggedIn,
+        user : req.session.user,
       });
     })
     .catch((err) => {
@@ -45,7 +47,8 @@ exports.getAddToFavourites = (req, res, next) => {
           registeredHomes: favouriteHomes,
           pageTitle: "Favourites",
           currentPage: "favourites",
-          isLoggedIn : req.isLoggedIn,
+          isLoggedIn : req.session.isLoggedIn,
+          user : req.session.user,
         });
 
 

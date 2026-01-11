@@ -1,50 +1,93 @@
 <header>
-    <nav class="fixed top-0 left-0 bg-red-500 h-12 w-full flex items-center px-6">
-      <div class="text-white font-semibold text-lg mr-8">
-        Airbnb
-      </div>
+  <nav class="fixed top-0 left-0 bg-red-500 h-12 w-full flex items-center px-6">
+    
+    <!-- Logo -->
+    <div class="text-white font-semibold text-lg mr-8">
+      Airbnb
+    </div>
 
-      <ul class="flex space-x-6 text-white text-sm items-center">
+    <!-- LEFT MENU -->
+    <ul class="flex space-x-6 text-white text-sm items-center">
+      <% if(user.userType === 'guest') { %>
         <li>
-          <a href="/" class="<%= currentPage === 'index' ? 'bg-red-400' : 'hover:border-white' %> border border-transparent   p-1.5 rounded-sm">Home</a>
-        </li>
-        <% if(isLoggedIn) { %>
-        <li>
-          <a href="/add-home" class="<%= currentPage === 'add-home' ? 'bg-red-400' : 'hover:border-white' %> border border-transparent   p-1.5 rounded-sm
-">Add Home</a>
-        </li>
-        <li>
-          <a href="/favourites" class="<%= currentPage === 'favourites' ? 'bg-red-400' : 'hover:border-white' %> border border-transparent   p-1.5 rounded-sm">Favourites</a>
-        </li>
-        
+        <a href="/"
+           class="<%= currentPage === 'index' ? 'bg-red-400' : 'hover:border-white' %>
+                  border border-transparent p-1.5 rounded-sm flex items-center gap-1">
+          <i class="fa-solid fa-house"></i>
+          Home
+        </a>
+      </li>
+      <% } %>
 
-        <li>
-          <a href="/host/host-homes" class="<%= currentPage === 'host-homes' ? 'bg-red-400' : 'hover:border-white' %> border border-transparent   p-1.5 rounded-sm">Host Homes</a>
-        </li>
+      <% if(isLoggedIn) { %>
+      
+      <% if(user.userType === 'guest') { %>
+      <li>
+        <a href="/favourites"
+           class="<%= currentPage === 'favourites' ? 'bg-red-400' : 'hover:border-white' %>
+                  border border-transparent p-1.5 rounded-sm flex items-center gap-1">
+          <i class="fa-solid fa-heart"></i>
+          Favourites
+        </a>
+      </li>
+      <% } %>
+      <% if(user.userType === 'host') { %>
+      <li>
+        <a href="/add-home"
+           class="<%= currentPage === 'add-home' ? 'bg-red-400' : 'hover:border-white' %>
+                  border border-transparent p-1.5 rounded-sm flex items-center gap-1">
+          <i class="fa-solid fa-plus"></i>
+          Add Home
+        </a>
+      </li>
+      <% } %>
+      <% if(user.userType === 'host') { %>
 
-        <% } %>
+      <li>
+        <a href="/host/host-homes"
+           class="<%= currentPage === 'host-homes' ? 'bg-red-400' : 'hover:border-white' %>
+                  border border-transparent p-1.5 rounded-sm flex items-center gap-1">
+          <i class="fa-solid fa-building"></i>
+          Host Homes
+        </a>
+      </li>
+      <% } %>
+      <% } %>
+    </ul>
 
-        <% if(!isLoggedIn)  { %>
-        <li>
-          <a href="/login" class="<%= currentPage === 'login' ? 'bg-red-400' : 'hover:border-white' %> border border-transparent   p-1.5 rounded-sm">Login</a>
-        </li>
-        <li>
-          <a href="/signin" class="<%= currentPage === 'signin' ? 'bg-red-400' : 'hover:border-white' %> border border-transparent   p-1.5 rounded-sm">Sign in</a>
-        </li>
+    <!-- RIGHT MENU -->
+    <ul class="flex space-x-6 text-white text-sm items-center ml-auto">
+      <% if(!isLoggedIn) { %>
+      <li>
+        <a href="/login"
+           class="<%= currentPage === 'login' ? 'bg-red-400' : 'hover:border-white' %>
+                  border border-transparent p-1.5 rounded-sm flex items-center gap-1">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          Login
+        </a>
+      </li>
 
-        <% } else { %>
-          <li>
-  <div class="<%= currentPage === 'signin' ? 'bg-red-400' : 'hover:border-white' %> border border-transparent   p-1.5 rounded-sm"><form action="/logout" method="POST" >
-    <button
-      type="submit"
-      >
-      Logout
-    </button>
-  </form>
-  <!-- <a href="/logout" class="<%= currentPage === 'login' ? 'bg-red-400' : 'hover:border-white' %> border border-transparent   p-1.5 rounded-sm">Logout</a> -->
-   </div>
-        </li>
-          <% } %>
-      </ul>
-    </nav>
-  </header>
+      <li>
+        <a href="/signin"
+           class="<%= currentPage === 'signin' ? 'bg-red-400' : 'hover:border-white' %>
+                  border border-transparent p-1.5 rounded-sm flex items-center gap-1">
+          <i class="fa-solid fa-user-plus"></i>
+          Sign in
+        </a>
+      </li>
+      <% } else { %>
+      <li>
+        <form action="/logout" method="POST"
+              class="<%= currentPage === 'signin' ? 'bg-red-400' : 'hover:border-white' %>
+                     border border-transparent p-1.5 rounded-sm flex items-center gap-1">
+          <button type="submit">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+          </button>
+        </form>
+      </li>
+      <% } %>
+    </ul>
+
+  </nav>
+</header>

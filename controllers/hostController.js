@@ -7,7 +7,8 @@ exports.getAddHome = (req, res, next) => {
     pageTitle: "Add Home",
     currentPage: "add-home",
     editing : false,
-    isLoggedIn : req.isLoggedIn,
+    isLoggedIn : req.session,isLoggedIn,
+    user : req.session.user,
   });
 };
 
@@ -24,7 +25,8 @@ exports.postAddHome = (req, res, next) => {
     res.render("host/home-added", {
     pageTitle: "Home Added",
     currentPage: "home-added",
-    isLoggedIn : req.isLoggedIn,
+    isLoggedIn : req.session.isLoggedIn,
+    user : req.session.user,
     
   });
   }).catch((err)=> {
@@ -39,7 +41,8 @@ exports.getHostHomes = (req, res, next) => {
       registeredHomes: registeredHomes,
       pageTitle: "Host Homes",
       currentPage: "host-homes",
-      isLoggedIn : req.isLoggedIn,
+      isLoggedIn : req.session.isLoggedIn,
+      user : req.session.user,
     });
   }).catch((err)=> {
     console.log("Error occured during getHostHomes");
@@ -56,7 +59,8 @@ exports.hostGetEditHomes = (req, res, next) => {
     editing : editing,
     pageTitle: "Add Home",
     currentPage: "add-home",
-    isLoggedIn : req.isLoggedIn,
+    isLoggedIn : req.session.isLoggedIn,
+    user : req.session.user,
   });
 }
 ).catch((err)=> {
