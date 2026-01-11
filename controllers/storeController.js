@@ -1,4 +1,3 @@
-const favourite = require("../models/favourites");
 const home = require("../models/Home");
 const User = require('../models/user');
 

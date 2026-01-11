@@ -1,5 +1,5 @@
 //importing the modules
-const favourite = require("../models/favourites");
+
 const Home = require("../models/Home");
 
 exports.getAddHome = (req, res, next) => {
