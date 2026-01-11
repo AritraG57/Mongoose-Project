@@ -14,19 +14,7 @@
       </h1>
 
       <form action="/signin" method="POST" class="max-w-md mx-auto space-y-5">
-        <% if (errorMassages.length > 0) { %>
-  <div role="alert"
-       class="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-600">
-    <ul class="list-disc list-inside space-y-1">
-      <% errorMassages.forEach(error => { %>
-        <li><%= error %></li>
-      <% }); %>
-    </ul>
-  </div>
-<% } %>
-
-
-
+        <%- include('../partials/error') %>
         <!-- Name -->
         <div class="flex gap-4">
           <div class="flex-1">

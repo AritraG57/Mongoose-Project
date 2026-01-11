@@ -1,37 +1,55 @@
 <%- include('../partials/head') %>
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 </head>
-<body class="pt-20 m-2 bg-gray-100 font-sans">
+
+<body class="pt-20 bg-gradient-to-br from-gray-100 to-gray-200 font-sans">
   <%- include('../partials/nav') %>
 
   <main class="min-h-screen flex items-center justify-center px-4">
-    <div class="bg-white w-full max-w-md rounded-xl shadow-lg p-8">
-      <div class="w-full flex justify-center">
-      <h2 class="text-3xl font-bold text-red-500 mb-6">
-        Enter the details
-      </h2>
-</div>
-      <form action="/login" method="POST" class="space-y-4">
-        <input
-          type="text"
-          name="username"
-          placeholder="Enter your username"
-          class="bg-gray-100 w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-rose-500"
-          required
-        />
+    <div class="bg-white w-full max-w-md rounded-2xl shadow-xl p-10">
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter password"
-          class="bg-gray-100 w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-rose-500"
-          required
-        />
+      <div class="w-full flex justify-center mb-8">
+        <h2 class="text-3xl font-extrabold text-red-500 tracking-wide">
+          Enter the details
+        </h2>
+      </div>
 
+      <form action="/login" method="POST" class="space-y-5">
+        <%- include('../partials/error') %>
+        <div>
+          <label class="block text-sm text-gray-600 mb-1">Email</label>
+          <div class="relative">
+            <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <input
+              type="email"
+              name="email"
+              value="<%= oldInput.email ? oldInput.email : '' %>"
+              placeholder="you@example.com"
+              class="w-full pl-11 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 outline-none transition"
+              required />
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm text-gray-600 mb-1">Password</label>
+          <div class="relative">
+            <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter password"
+              class="w-full pl-11 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 outline-none transition"
+              required />
+          </div>
+        </div>
         
 
         <button
           type="submit"
-          class="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-lg transition"
+          class="w-full bg-red-500 hover:bg-red-600 active:scale-[0.99]
+                 text-white font-semibold py-3 rounded-xl
+                 transition-all duration-200 shadow-md hover:shadow-lg"
         >
           Log in
         </button>
@@ -39,6 +57,5 @@
       </form>
     </div>
   </main>
-  
 </body>
 </html>

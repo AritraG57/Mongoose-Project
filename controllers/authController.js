@@ -1,4 +1,6 @@
 const { check, validationResult } = require("express-validator");
+const User = require("../models/user");
+const bcrypt = require("bcryptjs");
 
 exports.getLogin = (req, res, next) => {
   console.log("I get response");
@@ -6,12 +8,49 @@ exports.getLogin = (req, res, next) => {
     pageTitle: "Login",
     currentPage: "login",
     isLoggedIn: req.isLoggedIn,
+    oldInput : {},
+    user: {},
+    errorMassages : [],
   });
 };
 
-exports.postLogin = (req, res, next) => {
+exports.postLogin = async (req, res, next) => {
   console.log("login post request handled");
+  const {email, password} = req.body;
+  const user = await User.findOne({email});
+  if (!user) {
+    return res.status(422).render("auth/login", {
+      pageTitle: "Login",
+      currentPage: "login",
+      isLoggedIn: false,
+      errorMassages: ["User does not exist"],
+      oldInput: {email},
+      user: {},
+    });
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    return res.status(422).render("auth/login", {
+      pageTitle: "Login",
+      currentPage: "login",
+      isLoggedIn: false,
+      errorMassages: ["Invalid Password"],
+      oldInput: {email},
+      user: {},
+    });
+  }
+
+
+
   req.session.isLoggedIn = true;
+  //req.session.user = user;
+  req.session.user = {
+  _id: user._id.toString(),
+  email: user.email,
+  userType: user.userType,
+};
+  await req.session.save();
   res.redirect("/");
 };
 
@@ -26,8 +65,8 @@ exports.getSignin = (req, res, next) => {
     pageTitle: "sign in",
     currentPage: "signin",
     isLoggedIn: req.isLoggedIn,
-    oldInput : {},
-    errorMassages : [],
+    oldInput: {},
+    errorMassages: [],
   });
 };
 
@@ -102,17 +141,33 @@ exports.postSignin = [
         pageTitle: "Sign In",
         currentPage: "signin",
         isLoggedIn: false,
-        errorMassages : errors.array().map(error => error.msg),
-        oldInput : {
-            firstName,
-            lastName,
-            email,
-            password,
-            userType,
-        }
+        errorMassages: errors.array().map((error) => error.msg),
+        oldInput: {
+          firstName,
+          lastName,
+          email,
+          password,
+          userType,
+        },
       });
     }
 
-    res.redirect('/login');
+    bcrypt.hash(password, 12).then((hashedPassword) => {
+      const user = new User({
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: hashedPassword,
+        userType: userType,
+      });
+      user
+        .save()
+        .then(() => {
+          res.redirect("/login");
+        })
+        .catch((err) => {
+          console.log("Error while creating user", err);
+        });
+    });
   },
 ];
