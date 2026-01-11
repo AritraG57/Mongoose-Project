@@ -1,111 +1,144 @@
 <%- include('../partials/head') %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
-<body class="pt-20 m-2 bg-gray-100 font-sans">
+<body class="bg-[#f7f7f7] font-sans">
   <%- include('../partials/nav') %>
-  
+  <%- include('../partials/spacer') %>
 
   <main class="min-h-screen flex items-center justify-center px-4">
-    <div class="bg-white w-full max-w-md rounded-xl shadow-lg p-8">
+    <div class="w-full max-w-2xl bg-white rounded-2xl shadow-sm border border-gray-200 p-10">
 
-      <div class="w-full flex justify-center mb-6">
-        <h2 class="text-3xl font-bold text-red-500">
-          Create Your Account
-        </h2>
-      </div>
+      <h1 class="text-3xl font-semibold text-center text-gray-900 mb-8">
+        Create your account
+      </h1>
 
-      <form action="/signup" method="POST" class="space-y-4">
+      <form action="/signin" method="POST" class="max-w-md mx-auto space-y-5">
+        <% if (errorMassages.length > 0) { %>
+  <div role="alert"
+       class="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-600">
+    <ul class="list-disc list-inside space-y-1">
+      <% errorMassages.forEach(error => { %>
+        <li><%= error %></li>
+      <% }); %>
+    </ul>
+  </div>
+<% } %>
+
+
 
         <!-- Name -->
-         <div class="flex space-x-4">
-        <input
-          type="text"
-          name="firstName"
-          placeholder="First Name"
-          
-          class="bg-gray-100 w-[48%] border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-rose-500"
-          required
-        />
+        <div class="flex gap-4">
+          <div class="flex-1">
+            <label class="block text-sm text-gray-600 mb-1">First name</label>
+            <div class="relative w-full">
+              <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+              <input
+                type="text"
+                name="firstName"
+                value="<%= oldInput.firstName ? oldInput.firstName : '' %>"
+                placeholder="First Name"
+                class="w-full pl-11 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 outline-none transition"
+                required />
+            </div>
+          </div>
 
-        <input
-          type="text"
-          name="lastName"
-          placeholder="Last Name"
-    
-          class="bg-gray-100 w-[48%] border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-rose-500"
-          required
-        />
-</div>
+          <div class="flex-1">
+            <label class="block text-sm text-gray-600 mb-1">Last name</label>
+            <div class="relative">
+              <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+              <input
+                type="text"
+                name="lastName"
+                value="<%= oldInput.lastName ? oldInput.lastName : '' %>"
+                placeholder="Last Name"
+                class="w-full pl-11 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 outline-none transition" />
+            </div>
+          </div>
+        </div>
 
         <!-- Email -->
-        <input
-          type="email"
-          name="email"
-          placeholder="Email address"
-          class="bg-gray-100 w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-rose-500"
-          required
-        />
+        <div>
+          <label class="block text-sm text-gray-600 mb-1">Email</label>
+          <div class="relative">
+            <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <input
+              type="email"
+              name="email"
+              value="<%= oldInput.email ? oldInput.email : '' %>"
+              placeholder="you@example.com"
+              class="w-full pl-11 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 outline-none transition"
+              required />
+          </div>
+        </div>
 
         <!-- Password -->
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          class="bg-gray-100 w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-rose-500"
-          required
-        />
+        <div>
+          <label class="block text-sm text-gray-600 mb-1">Password</label>
+          <div class="relative">
+            <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter password"
+              class="w-full pl-11 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 outline-none transition"
+              required />
+          </div>
+        </div>
 
         <!-- Confirm Password -->
-        <input
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm Password"
-          class="bg-gray-100 w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-rose-500"
-          required
-        />
+        <div>
+          <label class="block text-sm text-gray-600 mb-1">Confirm password</label>
+          <div class="relative">
+            <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <input
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm password"
+              class="w-full pl-11 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 outline-none transition"
+              required />
+          </div>
+        </div>
 
-        <!-- User Type -->
-        <div class="bg-gray-100 border border-gray-300 rounded-lg px-4 py-3">
-          <p class="text-sm font-medium text-gray-700 mb-2">
-            Register as
-          </p>
-          <div class="flex space-x-6">
-            <label class="flex items-center space-x-2 cursor-pointer">
-              <input type="radio" name="userType" value="guest" class="accent-red-500" checked />
-              <span>Guest</span>
+        <!-- User type -->
+        <div class="rounded-xl border border-gray-200 p-4 bg-gray-50">
+          <p class="text-sm font-medium text-gray-700 mb-3">Register as</p>
+          <div class="flex gap-8">
+            <label class="flex items-center gap-2 cursor-pointer text-gray-700">
+              <input type="radio" name="userType" value="guest"
+                class="accent-rose-500"
+                checked="<% oldInput.userType === "guest"%>" />
+              Guest
             </label>
-            <label class="flex items-center space-x-2 cursor-pointer">
-              <input type="radio" name="userType" value="host" class="accent-red-500" />
-              <span>Host</span>
+            <label class="flex items-center gap-2 cursor-pointer text-gray-700">
+              <input type="radio" name="userType" value="host"
+                class="accent-rose-500"
+                checked="<% oldInput.userType === "host"%>" />
+              Host
             </label>
           </div>
         </div>
 
         <!-- Terms -->
-        <label class="flex items-center space-x-2 text-sm text-gray-600">
-          <input type="checkbox" name="terms" class="accent-red-500" required />
+        <label class="flex items-center gap-2 text-sm text-gray-600">
+          <input type="checkbox" name="terms" class="accent-rose-500" required />
           <span>
             I agree to the
-            <a href="/terms" class="text-red-500 hover:underline">
-              terms and conditions
-            </a>
+            <a href="#" class="text-rose-500 hover:underline">terms and conditions</a>
           </span>
         </label>
 
         <!-- Submit -->
         <button
           type="submit"
-          class="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-lg transition"
-        >
+          class="w-full bg-rose-500 hover:bg-rose-600 text-white py-3 rounded-xl font-semibold transition shadow-sm">
           Register
         </button>
 
         <!-- Login -->
-        <p class="text-center text-sm text-gray-600 pt-2">
+        <p class="text-center text-sm text-gray-600">
           Already have an account?
-          <a href="/login" class="text-red-500 font-medium hover:underline">
-            Log in
-          </a>
+          <a href="/login" class="text-rose-500 font-medium hover:underline">Log in</a>
         </p>
 
       </form>
