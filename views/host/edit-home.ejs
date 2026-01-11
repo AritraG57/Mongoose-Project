@@ -1,75 +1,118 @@
 <%- include('../partials/head') %>
 </head>
-<body class="pt-20 m-2 bg-gray-100 font-sans">
+
+<body class="pt-20 bg-gray-100 font-sans">
   <%- include('../partials/nav') %>
 
   <main class="min-h-screen flex items-center justify-center px-4">
-    <div class="bg-white w-full max-w-md rounded-xl shadow-lg p-8">
-      <div class="w-full flex justify-center">
-      <h2 class="text-3xl font-bold text-red-500 mb-6">
-        <%= editing ? "Edit" : "Add" %> Your Home
-      </h2>
-</div>
-      <form action="/<%= editing ? 'edit-home':'home-added' %>" method="POST" class="space-y-4">
-        <input type="hidden" value="<%= editing ? home._id : '' %>"
-        name="_id" >
-        <input
-          type="text"
-          name="homename"
-          placeholder="Home name"
-          value="<%= editing ? home.homename : '' %>"
-          class="bg-gray-100 w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-rose-500"
-          required
-        />
-<div class="flex space-x-4">
-        <input
-          type="text"
-          name="price"
-          placeholder="Price per night (₹)"
-          value="<%= editing ? home.price : '' %>"
-          class="bg-gray-100 w-[48%] border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-rose-500"
-          required
-        />
+    <div class="bg-white w-full max-w-md rounded-2xl shadow-xl p-8">
 
-        <input
-          type="number"
-          name="rating"
-          placeholder="Rating (1–5)"
-          value="<%= editing ? home.rating : '' %>"
-          min="1"
-          max="5"
-          class="bg-gray-100 w-[48%] border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-rose-500"
-          required
-        />
-</div>
-        <input
-          type="text"
-          name="image"
-          value="<%= editing ? home.image : '' %>"
-          placeholder="Image URL"
-          class="bg-gray-100 w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-rose-500"
-          required
-        />
+      <!-- Title -->
+      <div class="w-full flex justify-center mb-6">
+        <h2 class="text-3xl font-bold text-red-500 flex items-center gap-2">
+          <i class="fa-solid fa-house-circle-check"></i>
+          <%= editing ? "Edit" : "Add" %> Your Home
+        </h2>
+      </div>
 
-        <textarea
-          
-          name="description"
-          value="<%= editing ? home.description : '' %>"
-          placeholder="Enter Description"
-          class="bg-gray-100 w-full  border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-rose-500"
-          required
-        /><%= editing ? home.description : '' %></textarea>
+      <form
+        action="/<%= editing ? 'edit-home' : 'home-added' %>"
+        method="POST"
+        class="space-y-5"
+        enctype="multipart/form-data"
+      >
+        <input type="hidden" value="<%= editing ? home._id : '' %>" name="_id">
 
+        <!-- Home name -->
+        <div>
+          <label class="text-sm text-gray-600 mb-1 block">Home name</label>
+          <div class="relative">
+            <i class="fa-solid fa-house absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <input
+              type="text"
+              name="homename"
+              placeholder="Home name"
+              value="<%= editing ? home.homename : '' %>"
+              class="bg-gray-100 w-full border border-gray-300 rounded-lg pl-10 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-rose-500"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Price & Rating -->
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="text-sm text-gray-600 mb-1 block">Price / night (₹)</label>
+            <div class="relative">
+              <i class="fa-solid fa-indian-rupee-sign absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+              <input
+                type="text"
+                name="price"
+                placeholder="Price per night (₹)"
+                value="<%= editing ? home.price : '' %>"
+                class="bg-gray-100 w-full border border-gray-300 rounded-lg pl-10 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-rose-500"
+                required
+              />
+            </div>
+          </div>
+
+          <div>
+            <label class="text-sm text-gray-600 mb-1 block">Rating (1–5)</label>
+            <div class="relative">
+              <i class="fa-solid fa-star absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+              <input
+                type="number"
+                name="rating"
+                placeholder="Rating (1–5)"
+                value="<%= editing ? home.rating : '' %>"
+                min="1"
+                max="5"
+                class="bg-gray-100 w-full border border-gray-300 rounded-lg pl-10 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-rose-500"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Image -->
+        <div>
+          <label class="text-sm text-gray-600 mb-1 block">Home image</label>
+          <div class="relative">
+            <i class="fa-solid fa-image absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <input
+              type="file"
+              name="image"
+              accept="image/jpg, image/jpeg, image/png"
+              class="bg-gray-100 w-full border border-gray-300 rounded-lg pl-10 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-rose-500"
+            />
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label class="text-sm text-gray-600 mb-1 block">Description</label>
+          <textarea
+            name="description"
+            placeholder="Enter Description"
+            class="bg-gray-100 w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-rose-500 min-h-[100px]"
+            required
+          ><%= editing ? home.description : '' %></textarea>
+        </div>
+
+        <!-- Submit -->
         <button
           type="submit"
-          class="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-lg transition"
+          class="w-full bg-red-500 hover:bg-red-600 active:scale-[0.98]
+                 text-white font-semibold py-3 rounded-xl
+                 transition-all duration-200 shadow-md hover:shadow-lg
+                 flex items-center justify-center gap-2"
         >
+          <i class="fa-solid fa-check"></i>
           <%= editing ? "Edit home" : "Submit" %>
         </button>
 
       </form>
     </div>
   </main>
-  
 </body>
 </html>

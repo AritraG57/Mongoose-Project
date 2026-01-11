@@ -1,5 +1,5 @@
 //importing the modules
-
+const fs = require('fs');
 const Home = require("../models/Home");
 
 exports.getAddHome = (req, res, next) => {
@@ -13,8 +13,12 @@ exports.getAddHome = (req, res, next) => {
 };
 
 exports.postAddHome = (req, res, next) => {
+  if(!req.file) {
+    return res.status(400).send('No image provided');
+  }
+  const photoUrl = req.file.path;
   const home = new Home({
-    image : req.body.image,
+    image : photoUrl,
     homename : req.body.homename,
     rating : req.body.rating,
     price : req.body.price,
@@ -75,7 +79,16 @@ exports.postEditHomes = (req,res,next) => {
     updatedHome.homename = req.body.homename;
     updatedHome.price = req.body.price;
     updatedHome.rating = req.body.rating;
-    updatedHome.image = req.body.image;
+    if(req.file) {
+      fs.unlink(updatedHome.image,(err) => {
+        if(err) {
+          console.log("Error while deleting file",err);
+        }
+      });
+      updatedHome.image = req.file.path;
+      
+    }
+    
     updatedHome.description = req.body.description;
     updatedHome.save().then((result)=> {
       console.log("Home Updated");

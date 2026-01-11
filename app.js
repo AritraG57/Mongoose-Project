@@ -15,6 +15,39 @@ const store = new MongoDBStore({
     collection : 'sessions',
     
 })
+const multer = require('multer');
+const rootDir = require('./utils/rootDir');
+const randomString = (length) => {
+    const characters = 'qwertyuioplkjhgfdsazxcvbnm';
+    let result = '';
+    for(let i =0;i < length;i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+}
+
+const storage = multer.diskStorage({
+    destination : (req,file,cb) => {
+        cb(null,'uploads/');
+    },
+
+    filename: (req,file,cb) => {
+        cb(null,randomString(10)+'-'+file.originalname);
+    }
+});
+
+const fileFilter = (req,file,cb) => {
+    if(file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg') {
+        cb(null,true);
+    }
+    else {
+        cb(null,false);
+    }
+}
+
+const multerOptions = {
+    storage,fileFilter
+};
 
 //This line enables EJS as the template engine for rendering views.
 app.set('view engine', 'ejs');
@@ -35,18 +68,12 @@ app.use((req,res,next) => {
 
 //exposing the public folder so that browser can load styles and images
 app.use(express.static(path.join(__dirname, 'public')));
-
-//just printing something something in the console
-// app.use((req,res,next)=> {
-//     console.log(req.url,req.method);
-//     next();
-// });
-
-
-
 //Parsing
 app.use(express.urlencoded({ extended: true }));
-
+app.use(multer(multerOptions).single('image'));
+app.use('/uploads',express.static(path.join(rootDir,'uploads')));
+app.use('/host/uploads',express.static(path.join(rootDir,'uploads')));
+app.use('/home/uploads',express.static(path.join(rootDir,'uploads')));
 
 
 //routers
